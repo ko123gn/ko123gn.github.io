@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gym Membership</title>
+  <style>
+    body {
+      background-color: #2c2f33;
+      color: #ffffff;
+      font-family: "Segoe UI", sans-serif;
+      padding: 20px;
+    }
+
+    nav a {
+      color: #7289da;
+      text-decoration: none;
+      margin-right: 15px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      display: flex;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    form {
+      flex: 1;
+      max-width: 400px;
+      background-color: #23272a;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    input[type="submit"] {
+      margin-top: 20px;
+      background-color: #7289da;
+      color: white;
+      cursor: pointer;
+    }
+
+    .images {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+	.images img {
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+}
+
+  </style>
+</head>
+<body>
+
+  <h1>Join Our Gym</h1>
+  <nav>
+    <a href="About us gym.html">About Us</a>
+    <a href="Membership Form.html">Membership</a>
+    <a href="Location.html">Location</a>
+  </nav>
+
+  <div class="container">
+    <form id="membershipForm" onsubmit="return validateForm()">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" required>
+
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" required>
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" min="12" max="100" required>
+
+      <label for="plan">Choose a Plan:</label>
+      <select id="plan" required>
+        <option value="">--Select--</option>
+        <option value="monthly">Monthly - $30</option>
+        <option value="yearly">Yearly - $300</option>
+      </select>
+
+      <input type="submit" value="Join Now">
+    </form>
+
+    <div class="images">
+      
+      <img src="2.jpg" alt="Gym 2">
+      <img src="Arnold.jpg" alt="Gym 3">
+      <img src="onepunch.jpg" alt="Gym 4">
+
+    </div>
+  </div>
+
+  <script>
+    function validateForm() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const age = parseInt(document.getElementById("age").value);
+      const plan = document.getElementById("plan").value;
+
+      if (!name || !email || !plan || isNaN(age)) {
+        alert("Please fill in all fields correctly.");
+        return false;
+      }
+
+      if (age < 12 || age > 100) {
+        alert("Age must be between 12 and 100.");
+        return false;
+      }
+
+      alert("Membership submitted successfully!");
+      return true;
+    }
+  </script>
+
+</body>
+</html>

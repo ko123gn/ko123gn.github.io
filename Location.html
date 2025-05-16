@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gym Location</title>
+  <style>
+    body {
+      background-color: #2c2f33;
+      color: white;
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav {
+      background-color: #23272a;
+      padding: 10px 20px;
+    }
+
+    nav a {
+      color: #7289da;
+      text-decoration: none;
+      margin-right: 15px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .map-container,
+    .playlist-container,
+    .gallery {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .gallery {
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 20px;
+    }
+
+    .gallery img {
+      width: 200px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .playlist-container {
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .player-buttons button {
+      padding: 10px 20px;
+      margin: 5px;
+      background-color: #7289da;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .player-buttons button:hover {
+      background-color: #5a6cb8;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .progress-bar {
+      width: 300px;
+    }
+
+    .volume-slider {
+      width: 120px;
+    }
+
+    .playlist-display {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .playlist-display ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .playlist-display li {
+      cursor: pointer;
+      padding: 5px;
+      color: #cccccc;
+    }
+
+    .playlist-display li:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    .playlist-display .active {
+      color: #7289da;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="About us gym.html">About Us</a>
+    <a href="Membership Form.html">Membership</a>
+    <a href="Location.html">Location</a>
+  </nav>
+
+  <h1>Our Gym Location - NYC</h1>
+
+  <div class="map-container">
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.130081723008!2d-73.987278!3d40.754614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259aeeb85ea27%3A0xe59312959d6e9cc!2sEquinox%20Bryant%20Park!5e0!3m2!1sen!2sus!4v1714899196562"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+
+  <h2>Workout Music Playlist</h2>
+  <div class="playlist-container">
+    <audio id="audio" src="song1.mp3"></audio>
+
+    <div class="controls">
+      <div class="player-buttons">
+        <button onclick="playSong()">Play</button>
+        <button onclick="pauseSong()">Pause</button>
+        <button onclick="nextSong()">Next</button>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 5px;">
+        <span title="Volume">🔊</span>
+        <input type="range" id="volume" class="volume-slider" min="0" max="1" step="0.01">
+      </div>
+
+      <input type="range" id="progress" class="progress-bar" min="0" value="0">
+    </div>
+
+    <div class="playlist-display">
+      <ul id="songList">
+        <li onclick="selectSong(0)">1. Stains Of Time</li>
+        <li onclick="selectSong(1)">2. The Only Thing I Know for Real</li>
+        <li onclick="selectSong(2)">3. It Has To Be This Way</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Gym Gallery</h2>
+  <div class="gallery">
+    <img src="Armstrong2.jpg" alt="Gym 1">
+    <img src="Before and after.jpg" alt="Gym 2">
+    <img src="victor.png" alt="Gym 3">
+    <img src="Wolverine.jpg" alt="Gym 4">
+    <img src="Goku.jpg" alt="Gym 5">
+    <img src="Logan.jpg" alt="Gym 6">
+  </div>
+
+  <script>
+    const audio = document.getElementById("audio");
+    const volumeSlider = document.getElementById("volume");
+    const progressBar = document.getElementById("progress");
+    const songList = document.getElementById("songList").getElementsByTagName("li");
+
+    const playlist = ["Monsoon.mp3", "Jetstreamsam.mp3", "It Has To Be This Way.mp3"];
+    let current = 0;
+
+    function loadSong(index) {
+      current = index;
+      audio.src = playlist[current];
+      updatePlaylistHighlight();
+    }
+
+    function playSong() {
+      audio.play();
+    }
+
+    function pauseSong() {
+      audio.pause();
+    }
+
+    function nextSong() {
+      current = (current + 1) % playlist.length;
+      loadSong(current);
+      audio.play();
+    }
+
+    function selectSong(index) {
+      loadSong(index);
+      audio.play();
+    }
+
+    function updatePlaylistHighlight() {
+      for (let i = 0; i < songList.length; i++) {
+        songList[i].classList.remove("active");
+      }
+      songList[current].classList.add("active");
+    }
+
+    volumeSlider.addEventListener("input", function () {
+      audio.volume = volumeSlider.value;
+    });
+
+    audio.addEventListener("timeupdate", function () {
+      progressBar.max = audio.duration;
+      progressBar.value = audio.currentTime;
+    });
+
+    progressBar.addEventListener("input", function () {
+      audio.currentTime = progressBar.value;
+    });
+
+    window.onload = function () {
+      loadSong(current);
+      volumeSlider.value = 0.5;
+      audio.volume = 0.5;
+    };
+  </script>
+
+</body>
+</html>
